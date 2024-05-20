@@ -1,26 +1,43 @@
+let choiceElement = document.querySelector('.comp-choice');
+let gameMessage = document.querySelector('.game-message');
+let playerLabel = document.querySelector('.player-point');
+let compLabel = document.querySelector('.computer-point');
 let playerScore = 0;
 let compScore = 0;
+
+let options = document.querySelectorAll('button');
+
+for(const option of options) {
+    option.addEventListener('click', function() {
+        let comp = getCompChoice();
+        playRound(comp, this.id);
+    });
+}
 
 function getCompChoice() {
     let choices = ["rock", "paper", "scissors"];
     let randomNum = Math.floor(Math.random() * 3);
-    return choices[randomNum];
-}
+    let image;
 
-function getPlayerChoice() {
-    let answer = prompt("Which one would you like to play(Rock, Paper, Scissors)?");
-
-    switch(answer.toLowerCase()) {
+    switch(choices[randomNum]) {
         case "rock":
-            return "rock";
+            image = document.createElement('img');
+            image.src = "/img/Microsoft-Fluentui-Emoji-Flat-Rock-Flat.512.png";
+            choiceElement.appendChild(image);
+            break;
         case "paper":
-            return "paper";
+            image = document.createElement('img');
+            image.src = "/img/Microsoft-Fluentui-Emoji-Flat-Roll-Of-Paper-Flat.512.png";
+            choiceElement.appendChild(image);
+            break;
         case "scissors":
-            return "scissors";
-        default:
-            alert("Improper Answer. Please Try Again.")
-            return getPlayerChoice();
+            image = document.createElement('img');
+            image.src = "/img/Custom-Icon-Design-Pretty-Office-10-Scissors.512.png";
+            choiceElement.appendChild(image);
+            break;
     }
+
+    return choices[randomNum];
 }
 
 function playRound(computer, player) {
@@ -32,39 +49,21 @@ function playRound(computer, player) {
 
     if(combos[player] == computer) {
         playerScore++;
-        alert(`Player Won.\nPlayer Score: ${playerScore}\nComputer Score: ${compScore}`);
+        playerLabel.textContent = playerScore;
+        gameMessage.textContent = `Player Won.\nPlayer Score: ${playerScore}\nComputer Score: ${compScore}`;
+        setTimeout(reset, 2000);
     } else if(player == computer) {
-        alert(`Draw.\nPlayer Score: ${playerScore}\nComputer Score: ${compScore}`);
+        gameMessage.textContent = `Draw.\nPlayer Score: ${playerScore}\nComputer Score: ${compScore}`;
+        setTimeout(reset, 2000);
     } else {
         compScore++;
-        alert(`Computer Won.\nPlayer Score: ${playerScore}\nComputer Score: ${compScore}`);
+        compLabel.textContent = compScore;
+        gameMessage.textContent = `Computer Won.\nPlayer Score: ${playerScore}\nComputer Score: ${compScore}`;
+        setTimeout(reset, 2000);
     }
 }
 
-function playGame(times = 5) {
-    for(let i = 0; i <= times; i++) {
-        let compChoice = getCompChoice();
-        let playerChoice = getPlayerChoice();
-        playRound(compChoice, playerChoice);
-    }
-
-    while(true) {
-        let answer = prompt("Would you like to play again?");
-    
-        if(answer.toLowerCase() != "yes") {
-            return alert("Bye bye");
-        }
-    
-        let rounds = prompt("How many rounds would you like to play?");
-    
-        if(parseInt(rounds) == NaN) {
-            alert("Invalid Answer");
-        } else {
-            return playGame(parseInt(rounds));
-        }
-    }
+function reset() {
+    choiceElement.textContent = "";
+    gameMessage.textContent = "Press a button to play";
 }
-
-playGame();
-
-console.log(getCompChoice());

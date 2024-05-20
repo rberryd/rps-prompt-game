@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    color: rgb(83, 97, 83);
+}
+
+body {
+    background: rgb(156, 189, 156);
+}
+
+.display-container, .btn-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem;
+    gap: 1rem;
+}
+
+.display-container {
+    flex-direction: column;
+}
+
+button {
+    background: none;
+    border: none;
+}
+
+img {
+    height: 100px;
+    width: 100px;
+}
+
+img:hover {
+    filter: brightness(90%);
+}
+
+.score-container {
+    position: absolute;
+    top: 0;
+    border-bottom: 0.5rem solid;
+    border-right: 0.5rem solid;
+    border-radius: 0 0 1rem 0;
+}
+
+.score-container > * {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5vmax;
+    font-weight: bold;
+}
